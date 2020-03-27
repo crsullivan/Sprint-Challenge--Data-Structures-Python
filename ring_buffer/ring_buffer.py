@@ -10,13 +10,11 @@ class RingBuffer:
     def append(self, item):
         if len(self.storage) < self.capacity:
             self.storage.add_to_tail(item)
-            self.current = self.storage.add_to_tail
         elif len(self.storage) == self.capacity:
-            self.storage.delete(self.storage.head)
+            moved = self.storage.head
+            self.storage.remove_from_head()
             self.storage.add_to_head(item)
-        elif len(self.storage) > self.capacity:
-            self.storage.delete(self.storage.head)
-            self.storage.add_to_head(item)
+
 
     def get(self):
         # Note:  This is the only [] allowed
