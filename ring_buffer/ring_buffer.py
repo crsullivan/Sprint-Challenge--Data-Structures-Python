@@ -10,10 +10,16 @@ class RingBuffer:
     def append(self, item):
         if len(self.storage) < self.capacity:
             self.storage.add_to_tail(item)
-        elif len(self.storage) == self.capacity:
-            moved = self.storage.head
+            current = self.storage.head
+        elif len(self.storage) == self.capacity and current == self.storage.head:
             self.storage.remove_from_head()
             self.storage.add_to_head(item)
+            current = self.storage.next
+        elif len(self.storage) == self.capacity:
+            gone = current
+            current = self.storage.next
+            self.storage.insert_before(gone)
+            delete
 
 
     def get(self):
@@ -24,10 +30,6 @@ class RingBuffer:
         while mover is not self.storage.tail:
             mover = mover.next
             list_buffer_contents.append(mover.value)
-        return list_buffer_contents
-
-        # TODO: Your code here
-
         return list_buffer_contents
 
 # ----------------Stretch Goal-------------------
